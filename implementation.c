@@ -18,7 +18,7 @@ int gcd(int a, int b) {
 // Ligningen `de = 1 mod λ(n)` skal løses
 //
 // Hvis det skal være mere effektivt, kan følgende algoritme bruges:
-// https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm#Pseudocode
+// https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm#Computing_multiplicative_inverses_in_modular_structures
 int løs_for_d(int e, int phi) {
   for (int d = 2; d < phi; d++) {
     if ((d * e) % phi == 1) {
