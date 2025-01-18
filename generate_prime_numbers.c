@@ -3,13 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void choose_two_large_primes(int *p, int *q) {
+void vælg_to_store_primtal(int *p, int *q) {
   *p = -1;
   *q = -1;
 
-  int n = 945;
+  int n = 3849;
 
-  int *prime_numbers = generate_prime_numbers(n);
+  int *prime_numbers = generer_primtal(n);
 
   // Vælger de to største primtal der er genereret
   // Tallene skal gerne have en større forskel og være meget større, hvis det
@@ -36,36 +36,38 @@ void choose_two_large_primes(int *p, int *q) {
 
 // Algorithm: Sieve of Eratosthenes
 // https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes#Pseudocode
-int *generate_prime_numbers(int n) {
+int *generer_primtal(int n) {
   if (n < 2) {
     printf("No prime numbers less than 2");
     exit(EXIT_FAILURE);
   }
 
-  // Init array
-  int *is_prime = (int *)malloc((n - 2) * sizeof(char));
+  // Alle tal fra 0 til n-2
+  int *er_primtal = (int *)malloc((n - 2) * sizeof(char));
 
-  if (is_prime == NULL) {
+  if (er_primtal == NULL) {
     printf("Failed to allocate memory\n");
     exit(EXIT_FAILURE);
   }
 
-  // Sets all numbers to be prime initially
+  // Sætter alle tal til at være et primtal til at starte med
   for (int i = 0; i <= n - 2; i++) {
-    is_prime[i] = 1;
+    er_primtal[i] = 1;
   }
 
+  // Dette er bestemt af algoritmen der følges
   int sqrt_n = (int)sqrt(n);
 
+  // Sørger for, at kun primtallene har værdien 1
   for (int i = 2; i <= sqrt_n; i++) {
-    if (is_prime[i] == 0) {
+    if (er_primtal[i] == 0) {
       continue;
     };
 
     for (int j = i * i; j <= n; j += i) {
-      is_prime[j] = 0;
+      er_primtal[j] = 0;
     }
   }
 
-  return is_prime;
+  return er_primtal;
 }

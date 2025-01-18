@@ -1,2 +1,2 @@
-int *generate_prime_numbers(int n);
-void choose_two_large_primes(int *p, int *q);
+int *generer_primtal(int n);
+void vælg_to_store_primtal(int *p, int *q);
