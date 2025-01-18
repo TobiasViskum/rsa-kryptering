@@ -15,9 +15,11 @@ int gcd(int a, int b) {
   return a;
 }
 
-// https://en.wikipedia.org/wiki/Modular_multiplicative_inverse
 // Ligningen `de = 1 mod λ(n)` skal løses
-int modular_multiplicative_inverse(int e, int phi) {
+//
+// Hvis det skal være mere effektivt, kan følgende algoritme bruges:
+// https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm#Pseudocode
+int løs_for_d(int e, int phi) {
   for (int d = 2; d < phi; d++) {
     if ((d * e) % phi == 1) {
       return d;
@@ -80,7 +82,7 @@ void generer_rsa_nøgle(int *p, int *q, int *n, int *e, int *d) {
   int phi = (*p - 1) * (*q - 1);
 
   // Step 4: Vælg e, hvor 1 < e < phi og gcd(e, phi) == 1
-  // dvs følgende ligning skal løses: `gcd(e, phi) = 1, 1 < e < phi`
+  // dvs. følgende ligning skal løses: `gcd(e, phi) = 1, 1 < e < phi`
   *e = -1;
   for (int i = 2; i < phi; i++) {
     int t = gcd(i, phi);
@@ -91,18 +93,18 @@ void generer_rsa_nøgle(int *p, int *q, int *n, int *e, int *d) {
   }
 
   // Step 5: Bestem d
-  *d = modular_multiplicative_inverse(*e, phi);
+  *d = løs_for_d(*e, phi);
 }
 
 int main() {
-  printf("\nUKRYPTERRET NØGLE:\n");
+  printf("\nTEKST DER SKAL KRYPTERES:\n");
   char *tekst = "Tobias Tranberg Viskum";
   int streng_længde = strlen(tekst);
   char dekrypteret_tekst[streng_længde];
   int64_t krypteret_tekst[streng_længde];
   printf("%s\n\n", tekst);
 
-  printf("RSA KRYPTERING INFO:\n");
+  printf("RSA KRYPTERINGS INFO:\n");
   int p, q, n, e, d;
   generer_rsa_nøgle(&p, &q, &n, &e, &d);
 
